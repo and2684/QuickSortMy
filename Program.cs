@@ -9,6 +9,9 @@
             var sortedArray = QuickSortMy(array, 0, array.Length - 1);
 
             Console.WriteLine($"Sorted array: {String.Join(", ", sortedArray)}");
+
+            var sortedByLinqArray = QuickSortMyLinq(array);
+            Console.WriteLine($"Sorted by Linq array: {String.Join(", ", sortedByLinqArray)}");
             Console.ReadKey();
         }
 
@@ -49,6 +52,20 @@
             pivot++;
             Swap(ref array[pivot], ref array[max]);
             return pivot;
+        }
+
+        private static int[] QuickSortMyLinq(int[] array)
+        {
+            if (!array.Any()) return new int[] { };
+
+            var pivot = array.First();
+
+            var leftSide = array.Skip(1).Where(x => x < pivot).ToArray();
+            QuickSortMyLinq(leftSide);
+            var rightSide = array.Skip(1).Where(x => x >= pivot).ToArray();
+            QuickSortMyLinq(rightSide);
+
+            return array;
         }
     }
 }
