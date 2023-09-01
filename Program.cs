@@ -5,12 +5,11 @@
         static void Main(string[] args)
         {
             var array = new int[] { 11, 96, 14, 75, 222, 1, 14, 223, 25, 45, 6, 20 };
-
             var sortedArray = QuickSortMy(array, 0, array.Length - 1);
-
             Console.WriteLine($"Sorted array: {String.Join(", ", sortedArray)}");
 
-            var sortedByLinqArray = QuickSortMyLinq(array);
+            var anotherArray = new int[] { 11, 96, 14, 75, 222, 1, 14, 223, 25, 45, 6, 20 };
+            var sortedByLinqArray = QuickSortMyLinq(anotherArray);
             Console.WriteLine($"Sorted by Linq array: {String.Join(", ", sortedByLinqArray)}");
             Console.ReadKey();
         }
@@ -61,11 +60,11 @@
             var pivot = array.First();
 
             var leftSide = array.Skip(1).Where(x => x < pivot).ToArray();
-            QuickSortMyLinq(leftSide);
             var rightSide = array.Skip(1).Where(x => x >= pivot).ToArray();
-            QuickSortMyLinq(rightSide);
+            leftSide = QuickSortMyLinq(leftSide);
+            rightSide = QuickSortMyLinq(rightSide);
 
-            return array;
+            return leftSide.Concat(new int[] { pivot }).Concat(rightSide).ToArray();
         }
     }
 }
